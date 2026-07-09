@@ -146,7 +146,7 @@
 const SEDES = {
   med: { nombre:"BeautyPlus · Medellín", reviewUrl:"https://search.google.com/local/writereview?placeid=ChIJzaQr-ryDRo4RoY6t_hI8fGk" },
   bog: { nombre:"BeautyPlus · Bogotá",   reviewUrl:"https://search.google.com/local/writereview?placeid=ChIJ05BXDAGbP44RBG1N4qaeHrY" },
-  cal: { nombre:"BeautyPlus · Cali",     reviewUrl:"https://maps.app.goo.gl/gUSHyqdJ6atVCSby8" }
+  cal: { nombre:"BeautyPlus · Cali",     reviewUrl:"https://maps.app.goo.gl/gUSHyqdJ6atVCSby8" } /* respaldo: abre la ficha; afinar a writereview */
 };
 /* URL del backend de IA (Google Apps Script). Si se deja vacío, se usa limpieza local. */
 const IA_URL = ""; // <-- pega aquí la URL /exec de tu Apps Script
@@ -244,4 +244,13 @@ btnGo.onclick=async()=>{
   document.getElementById('pubHelp').style.display='block';
   const url=SEDE.reviewUrl;
   if(!url||url.startsWith('REEMPLAZAR')){ toast('Falta configurar el enlace de esta sede.'); return; }
-  setTimeout(()=>window.open(
+  setTimeout(()=>window.open(url,'_blank'),350);
+};
+
+/* ===== TOAST ===== */
+let tId;
+function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');
+  clearTimeout(tId);tId=setTimeout(()=>el.classList.remove('show'),2600);}
+</script>
+</body>
+</html>
