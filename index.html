@@ -1,1 +1,247 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Cuéntanos tu experiencia · BeautyPlus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --marron:#6F4638;         /* primario */
+    --marron-osc:#2F2522;     /* texto fuerte */
+    --taupe:#6F5B52;          /* acento */
+    --rosegold:#B98B78;       /* acento claro */
+    --crema:#FFF7F3;          /* fondo */
+    --crema2:#F8E7DF;         /* fondo tarjeta */
+    --crema3:#F3DBC3;         /* borde suave */
+    --ok:#3f8f4f;
+    --sombra:0 10px 30px rgba(47,37,34,.12);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Lato',Roboto,Arial,sans-serif;
+    color:var(--marron-osc);
+    background:linear-gradient(180deg,var(--crema) 0%,var(--crema2) 100%);
+    min-height:100dvh;
+    display:flex;justify-content:center;
+    padding:22px 16px 40px;
+  }
+  .card{
+    width:100%;max-width:460px;
+    background:#fff;border-radius:24px;
+    box-shadow:var(--sombra);
+    padding:26px 22px 28px;
+    text-align:center;
+  }
+  .logo{max-width:190px;width:60%;margin:2px auto 14px;display:block}
+  h1{
+    font-family:'Poppins',sans-serif;font-weight:700;
+    color:var(--marron);font-size:23px;line-height:1.25;margin:6px 0 6px;
+  }
+  .sub{color:var(--taupe);font-size:15px;line-height:1.45;margin:0 6px 4px}
+  .sede{
+    display:inline-block;margin:12px 0 4px;font-family:'Poppins',sans-serif;
+    font-weight:600;font-size:13px;color:#fff;background:var(--rosegold);
+    padding:5px 14px;border-radius:999px;letter-spacing:.3px;
+  }
+  /* estrellas */
+  .stars{display:flex;justify-content:center;gap:6px;margin:16px 0 6px}
+  .stars button{
+    background:none;border:none;font-size:38px;line-height:1;cursor:pointer;
+    color:var(--crema3);transition:transform .1s,color .15s;padding:2px;
+  }
+  .stars button.on{color:#f4b23e}
+  .stars button:active{transform:scale(.9)}
+  .stars-label{font-size:13px;color:var(--taupe);min-height:18px;margin-bottom:6px}
+  /* micrófono */
+  .mic{
+    width:118px;height:118px;border-radius:50%;border:none;cursor:pointer;
+    background:radial-gradient(circle at 30% 30%,var(--rosegold),var(--marron));
+    color:#fff;font-size:46px;margin:14px auto 6px;display:flex;align-items:center;
+    justify-content:center;box-shadow:0 8px 22px rgba(111,70,56,.45);
+    transition:transform .12s;position:relative;
+  }
+  .mic:active{transform:scale(.95)}
+  .mic.rec{animation:pulse 1.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(185,139,120,.6)}70%{box-shadow:0 0 0 22px rgba(185,139,120,0)}100%{box-shadow:0 0 0 0 rgba(185,139,120,0)}}
+  .mic-hint{font-size:14px;color:var(--taupe);margin:4px 0 12px;min-height:20px}
+  textarea{
+    width:100%;min-height:120px;border:2px solid var(--crema3);border-radius:16px;
+    padding:14px;font-size:16px;font-family:inherit;color:var(--marron-osc);
+    resize:vertical;background:var(--crema);outline:none;
+  }
+  textarea:focus{border-color:var(--rosegold)}
+  .btn{
+    width:100%;border:none;border-radius:16px;padding:16px;margin-top:12px;
+    font-family:'Poppins',sans-serif;font-weight:600;font-size:16px;cursor:pointer;
+    transition:opacity .15s,transform .1s;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+  .btn-ia{background:var(--crema2);color:var(--marron)}
+  .btn-go{background:var(--marron);color:#fff}
+  .btn-go .g{background:#fff;color:#4285F4;border-radius:4px;padding:0 5px;margin-right:6px;font-weight:700}
+  .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(0,0,0,.2);
+    border-top-color:var(--marron);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-3px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .paso{display:none}
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    background:var(--marron-osc);color:#fff;padding:13px 20px;border-radius:12px;
+    font-size:14px;opacity:0;transition:.25s;pointer-events:none;max-width:90%;z-index:9;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .foot{margin-top:18px;font-size:12px;color:var(--taupe);line-height:1.4}
+  .pub-help{background:var(--crema);border:1px dashed var(--crema3);border-radius:14px;
+    padding:12px;margin-top:12px;font-size:14px;color:var(--taupe);text-align:left;display:none}
+  .pub-help b{color:var(--marron)}
+</style>
+</head>
+<body>
+  <main class="card">
+    <img class="logo" alt="BeautyPlus"
+         src="https://bplus.com.co/wp-content/uploads/2022/11/Logo-beautyplus-R-dorado.png"
+         onerror="this.style.display='none'">
+    <div class="sede" id="sedeTag">BeautyPlus</div>
+    <h1>Cuéntanos tu experiencia 💬</h1>
+    <p class="sub">Para nosotros es fundamental mejorar cada día para ustedes. Solo <b>habla</b>, nosotros lo escribimos por ti.</p>
 
+    <!-- estrellas -->
+    <div class="stars" id="stars" role="radiogroup" aria-label="Calificación">
+      <button data-v="1" aria-label="1 estrella">★</button>
+      <button data-v="2" aria-label="2 estrellas">★</button>
+      <button data-v="3" aria-label="3 estrellas">★</button>
+      <button data-v="4" aria-label="4 estrellas">★</button>
+      <button data-v="5" aria-label="5 estrellas">★</button>
+    </div>
+    <div class="stars-label" id="starsLabel">Toca las estrellas (opcional)</div>
+
+    <!-- micrófono -->
+    <button class="mic" id="mic" aria-label="Hablar">🎤</button>
+    <div class="mic-hint" id="micHint">Toca el micrófono y cuéntanos</div>
+
+    <textarea id="texto" placeholder="Aquí aparecerá lo que digas… (también puedes escribir o corregir)"></textarea>
+
+    <button class="btn btn-ia" id="btnIA">✨ Mejorar redacción con IA</button>
+    <button class="btn btn-go" id="btnGo"><span class="g">G</span>Copiar y publicar en Google</button>
+
+    <div class="pub-help" id="pubHelp">
+      ✅ <b>Tu reseña ya está copiada.</b> En la pantalla de Google que se abrió:
+      <br>1) Elige las estrellas · 2) Toca el cuadro de texto y <b>pega</b> (mantén pulsado → “Pegar”) · 3) Pulsa <b>Publicar</b>. ¡Gracias! 💛
+    </div>
+
+    <p class="foot">Tu opinión se publica en Google a tu nombre. Al continuar aceptas compartirla públicamente.</p>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+/* ===== CONFIG ===== */
+/* Reemplaza REVIEW_URL con el enlace real de reseña de cada sede.
+   Formato: https://search.google.com/local/writereview?placeid=PLACE_ID
+   (o el link corto g.page/r/XXXX/review de Google Business) */
+const SEDES = {
+  med: { nombre:"BeautyPlus · Medellín", reviewUrl:"https://search.google.com/local/writereview?placeid=ChIJzaQr-ryDRo4RoY6t_hI8fGk" },
+  bog: { nombre:"BeautyPlus · Bogotá",   reviewUrl:"https://search.google.com/local/writereview?placeid=ChIJ05BXDAGbP44RBG1N4qaeHrY" },
+  cal: { nombre:"BeautyPlus · Cali",     reviewUrl:"https://maps.app.goo.gl/gUSHyqdJ6atVCSby8" }
+};
+/* URL del backend de IA (Google Apps Script). Si se deja vacío, se usa limpieza local. */
+const IA_URL = ""; // <-- pega aquí la URL /exec de tu Apps Script
+
+/* ===== SEDE ===== */
+const params = new URLSearchParams(location.search);
+const sedeKey = (params.get('sede')||'med').toLowerCase();
+const SEDE = SEDES[sedeKey] || SEDES.med;
+document.getElementById('sedeTag').textContent = SEDE.nombre;
+
+/* ===== ESTRELLAS ===== */
+let rating = 0;
+const LBL = {1:"Lamentamos tu experiencia 🙏",2:"Queremos mejorar",3:"Gracias por contarnos",4:"¡Nos alegra! 😊",5:"¡Excelente! Mil gracias 💛"};
+const starBtns=[...document.querySelectorAll('#stars button')];
+starBtns.forEach(b=>b.onclick=()=>{
+  rating=+b.dataset.v;
+  starBtns.forEach(x=>x.classList.toggle('on',+x.dataset.v<=rating));
+  document.getElementById('starsLabel').textContent=LBL[rating];
+});
+
+/* ===== VOZ (Web Speech API) ===== */
+const texto=document.getElementById('texto');
+const micBtn=document.getElementById('mic');
+const micHint=document.getElementById('micHint');
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null, grabando=false, baseTexto="";
+
+if(SR){
+  rec=new SR();
+  rec.lang='es-CO'; rec.continuous=true; rec.interimResults=true;
+  rec.onresult=e=>{
+    let fin="",interim="";
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const t=e.results[i][0].transcript;
+      if(e.results[i].isFinal) fin+=t+" "; else interim+=t;
+    }
+    if(fin) baseTexto=(baseTexto+fin).replace(/\s+/g,' ');
+    texto.value=(baseTexto+interim).trim();
+  };
+  rec.onend=()=>{ if(grabando) rec.start(); }; // reanuda si sigue activo
+  rec.onerror=e=>{ if(e.error==='not-allowed'){ micHint.textContent='Activa el permiso del micrófono para hablar.'; parar(); } };
+}else{
+  micHint.textContent='Tu navegador no permite dictado. Escribe abajo o usa el 🎤 de tu teclado.';
+  micBtn.style.opacity=.5;
+}
+
+function iniciar(){
+  if(!rec) return;
+  baseTexto=texto.value?texto.value+' ':'';
+  grabando=true; micBtn.classList.add('rec'); micBtn.textContent='⏹';
+  micHint.textContent='Escuchando… habla con naturalidad. Toca para terminar.';
+  try{rec.start()}catch(e){}
+}
+function parar(){
+  grabando=false; micBtn.classList.remove('rec'); micBtn.textContent='🎤';
+  micHint.textContent='Toca el micrófono para seguir, o revisa tu texto.';
+  try{rec.stop()}catch(e){}
+}
+micBtn.onclick=()=>grabando?parar():iniciar();
+
+/* ===== LIMPIEZA LOCAL (fallback) ===== */
+function limpiar(t){
+  t=t.replace(/\s+/g,' ').trim();
+  t=t.replace(/\b(este|pues|o sea|ee+h?|mmm+|nada|digamos)\b[, ]*/gi,' ');
+  t=t.replace(/\s+([,.!?])/g,'$1').replace(/\s+/g,' ').trim();
+  t=t.charAt(0).toUpperCase()+t.slice(1);
+  if(t && !/[.!?]$/.test(t)) t+='.';
+  return t;
+}
+
+/* ===== IA ===== */
+const btnIA=document.getElementById('btnIA');
+btnIA.onclick=async()=>{
+  const orig=texto.value.trim();
+  if(!orig){toast('Primero cuéntanos tu experiencia 🙂');return;}
+  if(!IA_URL){ texto.value=limpiar(orig); toast('Texto mejorado ✨'); return; }
+  btnIA.disabled=true; const html=btnIA.innerHTML; btnIA.innerHTML='<span class="spin"></span>Mejorando…';
+  try{
+    const r=await fetch(IA_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({texto:orig,estrellas:rating,sede:SEDE.nombre})});
+    const d=await r.json();
+    texto.value=(d && d.texto)?d.texto:limpiar(orig);
+    toast('Texto mejorado ✨');
+  }catch(e){ texto.value=limpiar(orig); toast('Listo (modo sin conexión)'); }
+  btnIA.disabled=false; btnIA.innerHTML=html;
+};
+
+/* ===== COPIAR + ABRIR GOOGLE ===== */
+const btnGo=document.getElementById('btnGo');
+btnGo.onclick=async()=>{
+  const t=texto.value.trim();
+  if(!t){toast('Primero cuéntanos tu experiencia 🙂');return;}
+  try{ await navigator.clipboard.writeText(t); }
+  catch(e){ texto.select(); document.execCommand('copy'); }
+  document.getElementById('pubHelp').style.display='block';
+  const url=SEDE.reviewUrl;
+  if(!url||url.startsWith('REEMPLAZAR')){ toast('Falta configurar el enlace de esta sede.'); return; }
+  setTimeout(()=>window.open(
